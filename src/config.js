@@ -64,6 +64,9 @@ import ArchitectureKitSource from "./ui/assets/sources/ArchitectureKitSource";
 import RockKitSource from "./ui/assets/sources/RockKitSource";
 import HubsSoundPackSource from "./ui/assets/sources/HubsSoundPackSource";
 
+import SpinningCubeNode from "./editor/nodes/SpinningCubeNode";
+import SpinningCubeNodeEditor from "./ui/properties/SpinningCubeNodeEditor";
+
 export function createEditor(api, settings) {
   const editor = new Editor(api, settings);
 
@@ -93,6 +96,7 @@ export function createEditor(api, settings) {
   editor.registerNode(ScenePreviewCameraNode, ScenePreviewCameraNodeEditor);
   editor.registerNode(MediaFrameNode, MediaFrameNodeEditor);
   editor.registerNode(AudioZoneNode, AudioZoneNodeEditor);
+  editor.registerNode(SpinningCubeNode, SpinningCubeNodeEditor);
 
   editor.registerSource(new ElementsSource(editor));
   editor.registerSource(new MyAssetsSource(editor));
