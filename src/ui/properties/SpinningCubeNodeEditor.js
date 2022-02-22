@@ -1,25 +1,25 @@
 import React from "react";
 import NodeEditor from "./NodeEditor";
 import { Cube } from "styled-icons/fa-solid/Cube";
-// Add the following imports
 import PropTypes from "prop-types";
 import NumericInputGroup from "../inputs/NumericInputGroup";
 import useSetPropertySelected from "./useSetPropertySelected";
+// Add the following imports
+import InputGroup from "../inputs/InputGroup";
+import ImageInput from "../inputs/ImageInput";
+import AttributionNodeEditor from "./AttributionNodeEditor";
 
 export default function SpinningCubeNodeEditor(props) {
-  // We're passing all of the props to NodeEditor, but we also want to pull out editor and node.
   const { editor, node } = props;
-  // useSetPropertySelected is a hook that can be used to set the specified properties on the selected objects.
   const onChangeSpeed = useSetPropertySelected(editor, "speed");
+  // Here we add the new property setter
+  const onChangeTextureSrc = useSetPropertySelected(editor, "textureSrc");
 
-  // Here's a rundown of the NumericInputGroup props:
-  // name: The input label
-  // smallStep: How much the value adjusts when you hold ctrl + up/down arrows
-  // mediumStep: How much the value adjusts when you press the up/down arrows
-  // largeStep: How much the value adjusts when you hold shift + up/down arrows
-  // value: The speed property of the current active node (last selected)
-  // onChange: The setter from above
-  // unit: Show the correct units to the user
+  // ImageGroup shows the label for an input and adds the correct margins
+  // ImageInput is another input field type that accepts urls for images.
+  // You can drag and drop files or assets from the assets panel into this field.
+  // The AttributionNodeEditor lets you add additional attribution info to this object.
+  // Since we're allowing the user to set a texture from an unknown source, we need to add this.
 
   return (
     <NodeEditor {...props} description={SpinningCubeNodeEditor.description}>
@@ -32,15 +32,18 @@ export default function SpinningCubeNodeEditor(props) {
         onChange={onChangeSpeed}
         unit="°/s"
       />
+      <InputGroup name="Texture Url">
+        <ImageInput value={node.textureSrc} onChange={onChangeTextureSrc} />
+      </InputGroup>
+      <AttributionNodeEditor name="Attribution" {...props} />
     </NodeEditor>
   );
 }
 
 SpinningCubeNodeEditor.iconComponent = Cube;
 
-SpinningCubeNodeEditor.description = "It's a cube! And it spins!!!";
+SpinningCubeNodeEditor.description = "It's a cube! And it spins!";
 
-// Make eslint happy with some prop types.
 SpinningCubeNodeEditor.propTypes = {
   editor: PropTypes.object.isRequired,
   node: PropTypes.object.isRequired
